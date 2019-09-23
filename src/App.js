@@ -23,7 +23,28 @@ class App extends React.Component {
       })
   }
 
+  componentDidUpdate(_prevProps, prevState) {
+    if (this.state.books !== prevState.books)
+      this.componentDidMount()
+  }
+
+
   render() {
+    let displayBook;
+    displayBook = (
+      this.state.books.map((book, index) => (
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">{book.title}</h5>
+            <h6 className="card-subtitle mb-2 text-muted">
+              {book.description}
+            </h6>
+            <button onClick={() => this.deleteBook(index)} class="btn btn-primary stretched-link">Delete</button>
+          </div>
+        </div>
+      ))
+    )
+
     return (
       <div className="App">
         <div class="container">
@@ -32,17 +53,7 @@ class App extends React.Component {
               <h1>Books</h1>
             </div>
 
-            {this.state.books.map((book, index) => (
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">{book.title}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    {book.description}
-                  </h6>
-                  <button onClick={() => this.deleteBook(index)} class="btn btn-primary stretched-link">Delete</button>
-                </div>
-              </div>
-            ))}
+            {displayBook}
 
           </div>
         </div>
